@@ -102,6 +102,24 @@ describe Board do
       expect(board.column_scores).to eq [1,0,0]
     end
 
+    it 'knows the diagonal scores' do
+      expect(board.diag_scores).to eq [0,-1]
+    end
+
+    it 'knows the line scores' do
+      expect(board.line_scores).to eq [2,-1,0,1,0,0,0,-1]
+    end
+
+    it 'knows that player 1 has won' do
+      board.place_if_valid(player2, {x: 1, y: 0})
+      board.place_if_valid(player1, {x: 0, y: 2})
+      expect(board.winner).to eq player1
+    end
+
+    it ' knows when there is no winner' do
+      expect(board.winner).to eq nil
+    end
+
   end
 
 

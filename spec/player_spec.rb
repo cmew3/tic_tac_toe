@@ -27,19 +27,9 @@ describe Player do
 
     it 'can select the (0,2) coordinate to place a marker' do
       allow(player_nought).to receive(:gets).and_return("0","2")
-      # exxpect(board).to receive(:place_if_valid).with(:nought, {x: 0, y:2})
       expect(player_nought.select_coordinate).to eq({x: 0, y: 2})
     end
 
-    xit 'a nought player can places a nought marker' do
-      expect(board).to receive(:place_if_valid).with(:nought,{x: 0, y:0})
-      player_nought.select_coordinate(0,0)
-    end
-
-    xit 'a cross player places a cross marker' do
-      expect(board).to receive(:place_if_valid).with(:cross,{x: 1, y:2})
-      player_cross.select_coordinate(1,2)
-    end
   end
   
 end
