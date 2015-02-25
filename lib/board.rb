@@ -1,7 +1,10 @@
 class Board < Array
 
-  def initialize
+  attr_reader :players
+
+  def initialize player1, player2
     @grid = Array.new(3,Array.new(3,0))
+    @players=[player1,player2]
 
   end
 
@@ -9,9 +12,9 @@ class Board < Array
     @grid
   end
 
-  def place(symbol, coordinates)
-    
-    case symbol
+  def place(player, coordinates)
+    marker = player.symbol
+    case marker
     when :nought 
         grid[coordinates[:x]][coordinates[:y]]=1
     when :cross 
