@@ -83,6 +83,7 @@ class Board
   def play_turn(player)
     marker_placed=false
     until marker_placed
+      print_to_terminal
       coordinates = player.select_coordinate
       marker_placed = place_if_valid(player, coordinates)
     end

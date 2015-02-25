@@ -57,7 +57,6 @@ describe Board do
       board.place_if_valid(player1, {x: 0, y: 0})
       expect(STDOUT).to receive(:puts).with('that space is taken!')
       board.place_if_valid(player2, {x: 0, y: 0})
-      # expect(board.grid[0][0]).to eq 1
     end
 
   end
@@ -69,16 +68,39 @@ describe Board do
     let(:board) { Board.new(player1, player2) }
 
     it 'counts how many turns have been taken' do
-      board.place_if_valid(player2, {x: 0, y: 0})
-      board.place_if_valid(player2, {x: 1, y: 1})
+      board.place_if_valid(player1, {x: 0, y: 0})
+      board.place_if_valid(player1, {x: 1, y: 1})
       expect(board.turn_count).to eq 2
      end
 
      it 'does not count a turn if placement is not valid' do
       allow(STDOUT).to receive(:puts)
-      board.place_if_valid(player2, {x: 0, y: 0})
-      board.place_if_valid(player2, {x: 0, y: 0})
+      board.place_if_valid(player1, {x: 0, y: 0})
+      board.place_if_valid(player1, {x: 0, y: 0})
       expect(board.turn_count).to eq 1
+     end
+
+     it 'completes a player\'s turn when a valid placement is found' do
+      board.place_if_valid(player1, {x: 0, y: 0})
+      allow(player2).to receive(:select_coordinate).and_return({ x:0, y:0 },{x:1,y:1})
+      board.play_turn(player2)
+      expect(board.turn_count).to eq 2
+     end
+
+     it 'prompts the second player\'s turn' do
+      board.place_if_valid(player1, {x: 0, y: 0})
+      allow(player2).to receive(:select_coordinate).and_return({ x:0, y:2 })
+      board.next_turn
+      expect(board.grid.flatten.inject(:+)).to eq 0
+  
+     end
+
+     it 'prompts the first player\'s turn ' do
+      board.place_if_valid(player1, {x: 0, y: 0})
+      board.place_if_valid(player2, {x: 0, y: 1})
+      allow(player1).to receive(:select_coordinate).and_return({ x:0, y:2 })
+      board.next_turn
+      expect(board.grid.flatten.inject(:+)).to eq 1
      end
 
   end
