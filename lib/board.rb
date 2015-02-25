@@ -72,7 +72,7 @@ class Board
     end
   end
 
-  def next_turn 
+  def play_next_turn 
     if turn_count % 2 == 0
       play_turn(players[0])
     else
@@ -86,6 +86,12 @@ class Board
       print_to_terminal
       coordinates = player.select_coordinate
       marker_placed = place_if_valid(player, coordinates)
+    end
+  end
+
+  def play_game 
+    until winner 
+      play_next_turn
     end
   end
 

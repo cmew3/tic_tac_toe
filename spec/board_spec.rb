@@ -90,7 +90,7 @@ describe Board do
      it 'prompts the second player\'s turn' do
       board.place_if_valid(player1, {x: 0, y: 0})
       allow(player2).to receive(:select_coordinate).and_return({ x:0, y:2 })
-      board.next_turn
+      board.play_next_turn
       expect(board.grid.flatten.inject(:+)).to eq 0
   
      end
@@ -99,7 +99,7 @@ describe Board do
       board.place_if_valid(player1, {x: 0, y: 0})
       board.place_if_valid(player2, {x: 0, y: 1})
       allow(player1).to receive(:select_coordinate).and_return({ x:0, y:2 })
-      board.next_turn
+      board.play_next_turn
       expect(board.grid.flatten.inject(:+)).to eq 1
      end
 
@@ -140,6 +140,19 @@ describe Board do
 
     it ' knows when there is no winner' do
       expect(board.winner).to eq nil
+    end
+
+  end
+
+  context 'playing a game' do
+    player1 = Player.new("Sarah", :nought)
+    player2 = Player.new("Anna", :cross)
+    let(:board) { Board.new(player1, player2) }
+
+    it 'takes turns until there is a winner' do
+      expect(board).to receive(:winner).and_return(nil,nil, nil, player1)
+      expect(board).to receive(:play_next_turn).exactly(3).times
+      board.play_game
     end
 
   end
