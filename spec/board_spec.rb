@@ -30,6 +30,10 @@ describe Board do
       expect(board.players.count).to eq 2
     end
 
+    it 'has a zero turn count' do
+      expect(board.turn_count).to eq 0
+    end
+
 
   end
   
@@ -41,6 +45,7 @@ describe Board do
     it 'can place a nought for player 1' do
       board.place(player1, {x: 0, y: 0})
       expect(board.grid[0][0]).to eq 1
+      expect(board.grid.flatten.inject(:+)).to eq 1
     end
 
     it 'can place a cross for player2' do
@@ -49,23 +54,53 @@ describe Board do
     end
 
     it 'cannot place a marker on a non-empty square' do
-      board.place(player1, {x: 0, y: 0})
-      expect{board.place_if_valid(player2, {x: 0, y: 0})}.to raise_error('that space is taken!')
-      expect(board.grid[0][0]).to eq 1
+      board.place_if_valid(player1, {x: 0, y: 0})
+      expect(STDOUT).to receive(:puts).with('that space is taken!')
+      board.place_if_valid(player2, {x: 0, y: 0})
+      # expect(board.grid[0][0]).to eq 1
     end
 
   end
 
-  context 'when counting goes' do
+  context 'when counting turns' do
 
     player1 = Player.new("Sarah", :nought)
     player2 = Player.new("Anna", :cross)
     let(:board) { Board.new(player1, player2) }
 
-    xit 'counts how many turns have been taken' do
+    it 'counts how many turns have been taken' do
       board.place_if_valid(player2, {x: 0, y: 0})
       board.place_if_valid(player2, {x: 1, y: 1})
+      expect(board.turn_count).to eq 2
      end
+
+     it 'does not count a turn if placement is not valid' do
+      allow(STDOUT).to receive(:puts)
+      board.place_if_valid(player2, {x: 0, y: 0})
+      board.place_if_valid(player2, {x: 0, y: 0})
+      expect(board.turn_count).to eq 1
+     end
+
+  end
+
+  context 'determining a winner' do 
+    
+    player1 = Player.new("Sarah", :nought)
+    player2 = Player.new("Anna", :cross)
+    let(:board) { Board.new(player1, player2) }
+    before { 
+      board.place_if_valid(player1, {x: 0, y: 0})
+      board.place_if_valid(player2, {x: 1, y: 1})
+      board.place_if_valid(player1, {x: 0, y: 1})
+    }
+
+    it 'knows the row scores' do
+      expect(board.row_scores).to eq [2,-1,0]
+    end
+
+    it 'knows the column scores' do
+      expect(board.column_scores).to eq [1,0,0]
+    end
 
   end
 
