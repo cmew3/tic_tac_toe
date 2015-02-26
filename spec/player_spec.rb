@@ -22,10 +22,11 @@ describe Player do
 
   context 'when placing markers' do
     let(:player_nought) { Player.new("Fred",:nought)}
+    let(:board)  { double :board }
 
     it 'can select the (0,2) coordinate to place a marker' do
       allow(player_nought).to receive(:gets).and_return("0","2")
-      expect(player_nought.select_coordinate).to eq({x: 0, y: 2})
+      expect(player_nought.select_coordinate(board)).to eq({x: 0, y: 2})
     end
 
   end

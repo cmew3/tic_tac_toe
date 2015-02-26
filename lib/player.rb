@@ -7,7 +7,7 @@ class Player
     @symbol = symbol
   end
 
-  def select_coordinate
+  def select_coordinate board
     # board.place_if_valid(symbol,{x: x, y: y})
     puts "enter x coord"
     x = gets.chomp.to_i
