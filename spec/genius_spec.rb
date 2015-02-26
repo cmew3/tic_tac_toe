@@ -9,7 +9,7 @@ describe Genius do
 
     context 'when playing a turn' do
 
-      xit 'will win if it is able' do
+      it 'will win if it is able' do
         grid = [[1,-1,0],[1,-1,0],[0,0,0]]
         expect(genius.select_coordinate(board)).to eq({ x: 2, y: 0})
       end

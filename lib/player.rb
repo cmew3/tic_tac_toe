@@ -16,4 +16,14 @@ class Player
     { x: x, y: y}
   end
 
+  def symbol_to_i 
+    case symbol
+    when :nought
+      return 1
+    when :cross 
+      return -1
+    end
+
+  end
+
 end

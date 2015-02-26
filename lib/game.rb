@@ -10,13 +10,7 @@ class Game
   end
 
   def place(player, coordinates)
-    marker = player.symbol
-    case marker
-    when :nought
-      board.grid[coordinates[:x]][coordinates[:y]]=1
-    when :cross 
-      board.grid[coordinates[:x]][coordinates[:y]] = -1
-    end
+    board.grid[coordinates[:x]][coordinates[:y]]=player.symbol_to_i
     @turn_count += 1
   end
 
