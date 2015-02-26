@@ -21,9 +21,7 @@ describe Player do
   end
 
   context 'when placing markers' do
-    let(:board) {double :board, assign: 1}
     let(:player_nought) { Player.new("Fred",:nought)}
-    let(:player_cross) { Player.new("Kate",:cross)}
 
     it 'can select the (0,2) coordinate to place a marker' do
       allow(player_nought).to receive(:gets).and_return("0","2")
