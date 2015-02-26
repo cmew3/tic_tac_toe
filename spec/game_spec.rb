@@ -23,18 +23,19 @@ describe Game do
 
   end
   
-  context 'when playing the game' do
-    player1 = Player.new("Sarah", :nought)
-    player2 = Player.new("Anna", :cross)
-    let(:game) { Game.new(player1, player2) }
+  context 'when placing markers' do
 
-    it 'can place a nought for player 1' do
+    let(:player1)  { Player.new("Sarah", :nought) }
+    let(:player2)  { Player.new("Anna", :cross)   }
+    let(:game)     { Game.new(player1,player2)    }
+
+    it 'places a nought for player 1' do
       game.place(player1, {x: 0, y: 0})
       expect(game.board.grid[0][0]).to eq 1
       expect(game.board.grid.flatten.inject(:+)).to eq 1
     end
 
-    it 'can place a cross for player2' do
+    it 'places a cross for player2' do
       game.place(player2, {x: 2, y: 2})
       expect(game.board.grid[2][2]).to eq -1
     end
@@ -49,9 +50,9 @@ describe Game do
 
   context 'when counting turns' do
 
-    player1 = Player.new("Sarah", :nought)
-    player2 = Player.new("Anna", :cross)
-    let(:game) { Game.new(player1, player2) }
+    let(:player1)  { Player.new("Sarah", :nought) }
+    let(:player2)  { Player.new("Anna", :cross)   }
+    let(:game)     { Game.new(player1,player2)    }
 
     it 'counts how many turns have been taken' do
       game.place_if_valid(player1, {x: 0, y: 0})
@@ -93,16 +94,15 @@ describe Game do
 
   context 'determining a winner' do 
     
-    player1 = Player.new("Sarah", :nought)
-    player2 = Player.new("Anna", :cross)
-    let(:game) { Game.new(player1, player2) }
-    before { 
-      game.place_if_valid(player1, {x: 0, y: 0})
-      game.place_if_valid(player2, {x: 1, y: 1})
-      game.place_if_valid(player1, {x: 0, y: 1})
-    }
+    let(:player1)   { Player.new("Sarah", :nought) }
+    let(:player2)   { Player.new("Anna", :cross)   }
+    let(:game)      { Game.new(player1,player2)    }
+    before  { game.place_if_valid(player1, {x: 0, y: 0})
+              game.place_if_valid(player2, {x: 1, y: 1})
+              game.place_if_valid(player1, {x: 0, y: 1})
+            }
 
-    it 'knows that player 1 has won' do
+    it 'knows when player 1 has won' do
       game.place_if_valid(player2, {x: 1, y: 0})
       game.place_if_valid(player1, {x: 0, y: 2})
       expect(game.winner).to eq player1
@@ -115,9 +115,9 @@ describe Game do
   end
 
   context 'playing a game' do
-    player1 = Player.new("Sarah", :nought)
-    player2 = Player.new("Anna", :cross)
-    let(:game) { Game.new(player1, player2) }
+    let(:player1)  { Player.new("Sarah", :nought) }
+    let(:player2)  { Player.new("Anna", :cross)   }
+    let(:game)     { Game.new(player1,player2)    }
 
     it 'takes turns until there is a winner' do
       expect(game).to receive(:winner).and_return(nil,nil, nil, player1)
@@ -126,7 +126,5 @@ describe Game do
     end
 
   end
-
-
 
 end

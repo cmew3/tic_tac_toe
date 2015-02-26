@@ -1,3 +1,5 @@
+require 'player'
+
 class Genius < Player
 
   def select_coordinate grid

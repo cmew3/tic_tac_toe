@@ -2,9 +2,9 @@ require 'genius'
 
 describe Genius do
 
-    let(:grid)    { double :grid }
-    let(:monkey)  {Monkey.new("monkey",:nought)}
-    let(:genius)  {Genius.new("genius",:cross)}
+    let(:grid)    { double :grid                   }
+    let(:monkey)  { Monkey.new("monkey",:nought)   }
+    let(:genius)  { Genius.new("genius",:cross)    }
 
     xit 'is never beaten' do
       for i in 1..100

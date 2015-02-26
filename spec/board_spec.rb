@@ -4,7 +4,7 @@ describe Board do
 
   context 'when created' do
 
-    let(:board) { Board.new }
+    let(:board)   { Board.new   }
 
     it 'has a grid' do
       expect(board.grid).to be_instance_of(Array)
@@ -29,12 +29,12 @@ describe Board do
 
   context 'determining line scores' do 
     
-    let(:board) { Board.new }
-    before { 
-      board.grid[0][0] = 1
-      board.grid[1][1] = -1
-      board.grid[0][1] = 1
-    }
+    let(:board)   { Board.new   }
+    before  { 
+              board.grid[0][0] = 1
+              board.grid[1][1] = -1
+              board.grid[0][1] = 1
+            }
 
     it 'knows the row scores' do
       expect(board.row_scores).to eq [2,-1,0]
@@ -53,6 +53,5 @@ describe Board do
     end
 
   end
-
 
 end
