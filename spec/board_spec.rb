@@ -30,26 +30,44 @@ describe Board do
   context 'determining line scores' do 
     
     let(:board)   { Board.new   }
+    let(:square_array) { [[1,1,0],[0,-1,0],[0,0,0]]}
+
+    it 'knows the row scores' do
+      expect(Board.row_scores(square_array)).to eq [2,-1,0]
+    end
+
+    it 'knows the column scores' do
+      expect(Board.column_scores(square_array)).to eq [1,0,0]
+    end
+
+    it 'knows the diagonal scores' do
+      expect(Board.diag_scores(square_array)).to eq [0,-1]
+    end
+
+    it 'knows the line scores' do
+      expect(Board.line_scores(square_array)).to eq [2,-1,0,1,0,0,0,-1]
+    end
+
+  end
+
+  context 'determining choice values' do 
+    let(:board)   { Board.new   }
     before  { 
               board.grid[0][0] = 1
               board.grid[1][1] = -1
               board.grid[0][1] = 1
+              board.grid[1][0] = -1
             }
-
-    it 'knows the row scores' do
-      expect(board.row_scores).to eq [2,-1,0]
+    it 'can tell if nought\'s play move is a winning play' do
+      expect(board.is_winning_play?(1, {x: 0, y: 2})).to be true
     end
 
-    it 'knows the column scores' do
-      expect(board.column_scores).to eq [1,0,0]
+    it 'can tell if nought\'s play is not a winning play' do
+       expect(board.is_winning_play?(1, {x: 2, y: 2})).to be false
     end
 
-    it 'knows the diagonal scores' do
-      expect(board.diag_scores).to eq [0,-1]
-    end
-
-    it 'knows the line scores' do
-      expect(board.line_scores).to eq [2,-1,0,1,0,0,0,-1]
+    it 'can tell if cross\'s play move is a winning play' do
+      expect(board.is_winning_play?(-1, {x: 1, y: 2})).to be true
     end
 
   end

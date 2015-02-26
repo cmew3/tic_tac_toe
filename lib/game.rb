@@ -30,10 +30,11 @@ class Game
     end
   end
 
+# this needs refactoring
   def winner 
-    if board.line_scores.include?(3)
+    if Board.line_scores(board.grid).include?(3)
       return players.select {|player| player.symbol == :nought}[0]
-    elsif board.line_scores.include?(-3)
+    elsif Board.line_scores(board.grid).include?(-3)
       return players.select {|player| player.symbol == :cross}[0]
     end
   end
